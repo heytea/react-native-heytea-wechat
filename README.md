@@ -1,1 +1,2 @@
-# react-native-heytea-wechat
+# react-native 微信插件
+
