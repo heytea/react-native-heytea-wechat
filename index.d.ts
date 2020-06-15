@@ -1,4 +1,4 @@
-declare module "react-native-wechat" {
+declare module "@heytea/react-native-wechat" {
     export function registerApp(appId: string): Promise<boolean>;
     // export function registerAppWithDescription(
     //   appId: string,
@@ -70,4 +70,16 @@ declare module "react-native-wechat" {
     export function pay(
       payload: PaymentLoad
     ): Promise<{ errCode?: number; errStr?: string }>;
+
+
+    export interface ShareMiniProgram {
+      webpageUrl: string;
+      miniprogramType: number;
+      userName: string;
+      path: string;
+      title: string;
+      description: string;
+      imageUrl: string;
+    }
+    export function shareMiniProgram(data:ShareMiniProgram): Promise<{ errCode?: number; errStr?: string }>;
   }

@@ -321,3 +321,28 @@ export function pay(data) {
     });
   });
 }
+
+
+
+/**
+ * wechat shareMiniProgram
+ * @param {String} data.webpageUrl
+ * @param {String} data.miniprogramType // 正式版:0，测试版:1，体验版:2
+ * @param {String} data.userName  // 微信原始id gh_afe6acb517f0
+ * @param {String} data.path // 小程序目标页面
+ * @param {String} data.title // 标题
+ * @param {String} data.description // 描述
+ * @returns {Promise}
+ */
+export function shareMiniProgram(data) {
+  return new Promise((resolve, reject) => {
+    WeChat.shareMiniProgram(data);
+    emitter.once('SendMessageToWX.Resp', resp => {
+      if (resp.errCode === 0) {
+        resolve(resp);
+      } else {
+        reject(new WechatError(resp));
+      }
+    });
+  });
+}
