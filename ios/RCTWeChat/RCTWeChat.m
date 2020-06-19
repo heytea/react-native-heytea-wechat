@@ -160,8 +160,8 @@ RCT_EXPORT_METHOD(shareToSession:(NSDictionary *)data
 }
 
 RCT_EXPORT_METHOD(pay:(NSDictionary *)data
-                  :(RCTPromiseResolveBlock)resolve
-                  :(RCTPromiseRejectBlock)reject)
+                  :(RCTResponseSenderBlock)callback)
+                  
 {
     PayReq* req             = [PayReq new];
     req.partnerId           = data[@"partnerId"];
@@ -171,7 +171,7 @@ RCT_EXPORT_METHOD(pay:(NSDictionary *)data
     req.package             = data[@"package"];
     req.sign                = data[@"sign"];
     BOOL success = [WXApi sendReq:req];
-    resolve(@{@"code": success ? @0 : @2});
+    callback(@[@{@"code":success ? @0 : @2 }]);
 }
 
 //launchMiniProgram:(NSString*)userName:(NSUInteger)miniProgramType:(NSString*)path
@@ -381,38 +381,38 @@ RCT_EXPORT_METHOD(launchMiniProgram:(NSDictionary *)data:(RCTResponseSenderBlock
 
 -(void) onResp:(BaseResp*)resp
 {
-	if([resp isKindOfClass:[SendMessageToWXResp class]])
-	{
-	    SendMessageToWXResp *r = (SendMessageToWXResp *)resp;
+    if([resp isKindOfClass:[SendMessageToWXResp class]])
+    {
+        SendMessageToWXResp *r = (SendMessageToWXResp *)resp;
     
-	    NSMutableDictionary *body = @{@"errCode":@(r.errCode)}.mutableCopy;
-	    body[@"errStr"] = r.errStr == nil?@"":r.errStr;
-	    body[@"lang"] = r.lang;
-	    body[@"country"] =r.country;
-	    body[@"type"] = @"SendMessageToWX.Resp";
+        NSMutableDictionary *body = @{@"errCode":@(r.errCode)}.mutableCopy;
+        body[@"errStr"] = r.errStr == nil?@"":r.errStr;
+        body[@"lang"] = r.lang;
+        body[@"country"] =r.country;
+        body[@"type"] = @"SendMessageToWX.Resp";
         [self sendEventWithName:RCTWXEventName body:body];
-	} else if ([resp isKindOfClass:[SendAuthResp class]]) {
-	    SendAuthResp *r = (SendAuthResp *)resp;
-	    NSMutableDictionary *body = @{@"errCode":@(r.errCode)}.mutableCopy;
-	    body[@"errStr"] = r.errStr == nil?@"":r.errStr;
-	    body[@"state"] = r.state;
-	    body[@"lang"] = r.lang;
-	    body[@"country"] =r.country;
-	    body[@"type"] = @"SendAuth.Resp";
+    } else if ([resp isKindOfClass:[SendAuthResp class]]) {
+        SendAuthResp *r = (SendAuthResp *)resp;
+        NSMutableDictionary *body = @{@"errCode":@(r.errCode)}.mutableCopy;
+        body[@"errStr"] = r.errStr == nil?@"":r.errStr;
+        body[@"state"] = r.state;
+        body[@"lang"] = r.lang;
+        body[@"country"] =r.country;
+        body[@"type"] = @"SendAuth.Resp";
     
-	    if (resp.errCode == WXSuccess)
-	    {
-	        [body addEntriesFromDictionary:@{@"appid":self.appId, @"code" :r.code}];
-	    }
+        if (resp.errCode == WXSuccess)
+        {
+            [body addEntriesFromDictionary:@{@"appid":self.appId, @"code" :r.code}];
+        }
             [self sendEventWithName:RCTWXEventName body:body];
-	    
-	} else if ([resp isKindOfClass:[PayResp class]]) {
-	        PayResp *r = (PayResp *)resp;
-	        NSMutableDictionary *body = @{@"errCode":@(r.errCode)}.mutableCopy;
-	        body[@"errStr"] = r.errStr == nil?@"":r.errStr;
-	        body[@"resType"] = @(r.type);
-	        body[@"returnKey"] =r.returnKey;
-	        body[@"type"] = @"PayReq.Resp";
+        
+    } else if ([resp isKindOfClass:[PayResp class]]) {
+            PayResp *r = (PayResp *)resp;
+            NSMutableDictionary *body = @{@"errCode":@(r.errCode)}.mutableCopy;
+            body[@"errStr"] = r.errStr == nil?@"":r.errStr;
+            body[@"resType"] = @(r.type);
+            body[@"returnKey"] =r.returnKey;
+            body[@"type"] = @"PayReq.Resp";
             [self sendEventWithName:RCTWXEventName body:body];
     }else if ([resp isKindOfClass:[WXLaunchMiniProgramResp class]]) {
         NSString *payload = [(WXLaunchMiniProgramResp*)resp extMsg];
@@ -429,3 +429,4 @@ RCT_EXPORT_METHOD(launchMiniProgram:(NSDictionary *)data:(RCTResponseSenderBlock
 }
 
 @end
+
