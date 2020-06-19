@@ -160,7 +160,8 @@ RCT_EXPORT_METHOD(shareToSession:(NSDictionary *)data
 }
 
 RCT_EXPORT_METHOD(pay:(NSDictionary *)data
-                  :(RCTResponseSenderBlock)callback)
+                  :(RCTPromiseResolveBlock)resolve
+                  :(RCTPromiseRejectBlock)reject)
 {
     PayReq* req             = [PayReq new];
     req.partnerId           = data[@"partnerId"];
@@ -170,7 +171,7 @@ RCT_EXPORT_METHOD(pay:(NSDictionary *)data
     req.package             = data[@"package"];
     req.sign                = data[@"sign"];
     BOOL success = [WXApi sendReq:req];
-    callback(@[success ? [NSNull null] : @""]);
+    resolve(@{@"code": success ? @0 : @2});
 }
 
 //launchMiniProgram:(NSString*)userName:(NSUInteger)miniProgramType:(NSString*)path
