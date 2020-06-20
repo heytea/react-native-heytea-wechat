@@ -309,12 +309,13 @@ export function pay(data) {
   if (Platform.OS === 'android') data.timeStamp = String(data.timeStamp);
 
   return new Promise((resolve, reject) => {
-    WeChat.pay(data, result => {
-      if (result) reject(result);
+    WeChat.pay(data, err => {
+      if (err) reject(err);
     });
     emitter.once('PayReq.Resp', resp => {
       if (resp.errCode === 0) {
-        resolve(resp);
+        let res = { code: resp.errCode }
+        resolve(res);
       } else {
         reject(new WechatError(resp));
       }
