@@ -171,7 +171,7 @@ RCT_EXPORT_METHOD(pay:(NSDictionary *)data
     req.package             = data[@"package"];
     req.sign                = data[@"sign"];
     BOOL success = [WXApi sendReq:req];
-    callback(@[@{@"code":success ? @0 : @2 }]);
+    callback(@[success? [NSNull null] : @"fail", @{@"code":success ? @0 : @2 }]);
 }
 
 //launchMiniProgram:(NSString*)userName:(NSUInteger)miniProgramType:(NSString*)path
