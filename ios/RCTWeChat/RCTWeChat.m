@@ -192,6 +192,19 @@ RCT_EXPORT_METHOD(pay:(NSDictionary *)data
     
 }
 
+RCT_EXPORT_METHOD(openAuthPage:(NSString *)appId
+                  :(NSString *)url
+                  :(RCTResponseSenderBlock)callback
+                  ){
+    
+    WXInvoiceAuthInsertReq *req = [[WXInvoiceAuthInsertReq alloc] init];
+    req.urlString = url;
+    [WXApi sendReq:req completion:^(BOOL success) {
+        callback(@[success ? [NSNull null] : INVOKE_FAILED]);
+    }];
+    
+}
+
 //launchMiniProgram:(NSString*)userName:(NSUInteger)miniProgramType:(NSString*)path
 RCT_EXPORT_METHOD(launchMiniProgram:(NSDictionary *)data:(RCTResponseSenderBlock)callback) {
 
@@ -429,7 +442,7 @@ RCT_EXPORT_METHOD(launchMiniProgram:(NSDictionary *)data:(RCTResponseSenderBlock
         {
             [body addEntriesFromDictionary:@{@"appid":self.appId, @"code" :r.code}];
         }
-            [self sendEventWithName:RCTWXEventName body:body];
+        [self sendEventWithName:RCTWXEventName body:body];
         
     } else if ([resp isKindOfClass:[PayResp class]]) {
             PayResp *r = (PayResp *)resp;
@@ -450,6 +463,12 @@ RCT_EXPORT_METHOD(launchMiniProgram:(NSDictionary *)data:(RCTResponseSenderBlock
                                    };
             [self sendEventWithName:RCTWXEventName body:body];
         }
+    }else if ([resp isKindOfClass:[WXInvoiceAuthInsertResp class]]) {
+        WXInvoiceAuthInsertResp *wxResp = (WXInvoiceAuthInsertResp *) resp;
+        NSString *strTitle = @"微信回跳";
+        NSString *strMsg = [NSString stringWithFormat:@"errcode: %d orderid:%@", wxResp.errCode, wxResp.wxOrderId];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:strTitle message:strMsg delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        [alert show];
     }
 }
 
