@@ -74,7 +74,7 @@ RCT_EXPORT_METHOD(registerApp:(NSString *)appid
                   :(RCTResponseSenderBlock)callback)
 {
     self.appId = appid;
-    [WXApi registerApp:appid universalLink:@""];
+    [WXApi registerApp:appid universalLink:@"https://ewbuq.share2dlink.com/"];
     callback(@[[NSNull null]]);
 }
 
@@ -191,8 +191,7 @@ RCT_EXPORT_METHOD(pay:(NSDictionary *)data
     
 }
 
-RCT_EXPORT_METHOD(openAuthPage:(NSString *)appId
-                  :(NSString *)url
+RCT_EXPORT_METHOD(openAuthPage:(NSString *)url
                   :(RCTResponseSenderBlock)callback
                   ){
     

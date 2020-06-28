@@ -205,9 +205,9 @@ export function launchMiniProgram(data) {
  * @param {*} appId 
  * @param {*} url 
  */
-export function openAuthPage(appId, url) {
+export function openAuthPage(url) {
   return new Promise((resolve, reject) => {
-    WeChat.openAuthPage(appId, url, () => { });
+    WeChat.openAuthPage(url, () => { });
     emitter.once('WXInvoiceAuthInsertResp.Resp', res => {
       if (res.errCode === 0){
           resolve(res);
