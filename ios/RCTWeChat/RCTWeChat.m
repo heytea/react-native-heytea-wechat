@@ -465,7 +465,7 @@ RCT_EXPORT_METHOD(launchMiniProgram:(NSDictionary *)data:(RCTResponseSenderBlock
     }else if ([resp isKindOfClass:[WXInvoiceAuthInsertResp class]]) {
         WXInvoiceAuthInsertResp *wxResp = (WXInvoiceAuthInsertResp *) resp;
         NSDictionary *body  = @{
-            @"errCode":wxResp.errCode,
+            @"errCode":@(wxResp.errCode),
             @"type":@"WXInvoiceAuthInsertResp.Resp"
         };
        [self sendEventWithName:RCTWXEventName body:body];
