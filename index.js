@@ -201,6 +201,24 @@ export function launchMiniProgram(data) {
 }
 
 /**
+ * 
+ * @param {*} appId 
+ * @param {*} url 
+ */
+export function openAuthPage(appId, url) {
+  return new Promise((resolve, reject) => {
+    WeChat.openAuthPage(appId, url, () => { });
+    emitter.once('WXInvoiceAuthInsertResp.Resp', res => {
+      if (res.errCode === 0){
+          resolve(res);
+      } else {
+          reject(new WechatError(res))
+        }
+    })
+  })
+}
+
+/**
  * Share something to timeline/moments/朋友圈
  * @method shareToTimeline
  * @param {Object} data

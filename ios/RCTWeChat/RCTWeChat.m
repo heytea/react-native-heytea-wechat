@@ -78,7 +78,6 @@ RCT_EXPORT_METHOD(registerApp:(NSString *)appid
     callback(@[[NSNull null]]);
 }
 
-
 RCT_EXPORT_METHOD(isWXAppInstalled:(RCTResponseSenderBlock)callback)
 {
     callback(@[[NSNull null], @([WXApi isWXAppInstalled])]);
@@ -465,10 +464,12 @@ RCT_EXPORT_METHOD(launchMiniProgram:(NSDictionary *)data:(RCTResponseSenderBlock
         }
     }else if ([resp isKindOfClass:[WXInvoiceAuthInsertResp class]]) {
         WXInvoiceAuthInsertResp *wxResp = (WXInvoiceAuthInsertResp *) resp;
-        NSString *strTitle = @"微信回跳";
-        NSString *strMsg = [NSString stringWithFormat:@"errcode: %d orderid:%@", wxResp.errCode, wxResp.wxOrderId];
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:strTitle message:strMsg delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-        [alert show];
+        NSDictionary *body  = @{
+            @"errCode":wxResp.errCode,
+            @"type":@"WXInvoiceAuthInsertResp.Resp"
+        };
+       [self sendEventWithName:RCTWXEventName body:body];
+       
     }
 }
 

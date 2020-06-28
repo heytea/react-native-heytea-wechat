@@ -56,8 +56,11 @@ declare module "@heytea/react-native-wechat" {
         miniProgramType:number;
         path?:string
     }
+  
 
-    export function launchMiniProgram(param:ILaunchMiniProgramParam): Promise<{ errCode?: number; errStr?: string }>;
+  export function launchMiniProgram(param: ILaunchMiniProgramParam): Promise<{ errCode?: number; errStr?: string }>;
+  
+  export function openAuthPage(appId: string, url: string): Promise<{errCode?:number}>;
 
     export interface PaymentLoad {
       partnerId: string;
