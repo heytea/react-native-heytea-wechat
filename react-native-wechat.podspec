@@ -10,6 +10,6 @@ Pod::Spec.new do |s|
   s.source       = { :git => "https://git.heytea.com/react-native-plugs/react-native-wechat.git", :tag => "master" }
   s.source_files = "ios/**/*.{h,m}"
   s.dependency "React"
-  s.dependency 'WechatOpenSDK', '1.8.6'
+  s.dependency 'WechatOpenSDK', '1.8.6.2'
   s.requires_arc = true
 end
