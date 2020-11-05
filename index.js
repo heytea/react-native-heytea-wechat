@@ -365,3 +365,18 @@ export function shareMiniProgram(data) {
     });
   });
 }
+
+
+export function jpPay() {
+  return new Promise((resolve, reject) => {
+    WeChat.jpPay();
+    emitter.once('PayReq.Resp', resp => {
+      if (resp.errCode === 0) {
+        let res = { code: resp.errCode }
+        resolve(res);
+      } else {
+        reject(new WechatError(resp));
+      }
+    });
+  });
+}

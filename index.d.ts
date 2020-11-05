@@ -80,4 +80,10 @@ declare module "@heytea/react-native-wechat" {
     imageUrl: string;
   }
   export function shareMiniProgram(data: ShareMiniProgram): Promise<{ errCode?: number; errStr?: string }>;
+
+
+  export function jpPay(): Promise<{ errCode?: number; errStr?: string }>;
 }
+
+
+
