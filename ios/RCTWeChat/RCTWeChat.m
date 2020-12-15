@@ -149,6 +149,15 @@ RCT_EXPORT_METHOD(sendErrorCommonResponse:(NSString *)message
   
 }
 
+RCT_EXPORT_METHOD(sendTicketReq:(NSString *)req)
+{
+    WXInvoiceAuthInsertReq *invoice = [[WXInvoiceAuthInsertReq alloc] init];
+    invoice.urlString = req;
+    [WXApi sendReq:invoice completion:^(BOOL success) {
+            
+    }];
+}
+
 RCT_EXPORT_METHOD(sendErrorUserCancelResponse:(NSString *)message
                   :(RCTResponseSenderBlock)callback)
 {
