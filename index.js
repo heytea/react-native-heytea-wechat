@@ -219,6 +219,23 @@ export function openAuthPage(url) {
 }
 
 /**
+ * // js 需传入授权的URL 
+ * @param {*} url 
+ */
+export function openTicket(url) {
+  return new Promise((resolve, reject) => {
+    WeChat.sendTicketReq(url);
+    emitter.once('WXInvoiceAuthInsertResp.Resp', res => {
+      if (res.errCode === 0){
+          resolve(res);
+      } else {
+          reject(new WechatError(res))
+       }
+    })
+  })
+}
+
+/**
  * Share something to timeline/moments/朋友圈
  * @method shareToTimeline
  * @param {Object} data
