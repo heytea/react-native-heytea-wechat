@@ -348,12 +348,13 @@ export function pay(data) {
       if (err) reject(err);
     });
     emitter.once('PayReq.Resp', resp => {
-      if (resp.errCode === 0) {
-        let res = { code: resp.errCode }
-        resolve(res);
-      } else {
-        reject(new WechatError(resp));
-      }
+      // if (resp.errCode === 0) {
+      //   let res = { code: resp.errCode }
+      //   resolve(res);
+      // } else {
+      //   reject(new WechatError(resp));
+      // }
+      resolve(resp);
     });
   });
 }

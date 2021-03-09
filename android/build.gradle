@@ -26,5 +26,4 @@ allprojects {
 
 dependencies {
   implementation 'com.facebook.react:react-native:+'
-  compile files('libs/libammsdk.jar')
 }
