@@ -71,13 +71,14 @@ declare module "@heytea/react-native-wechat" {
 
 
   export interface ShareMiniProgram {
-    webpageUrl: string;
-    miniprogramType: number;
-    userName: string;
-    path: string;
-    title: string;
-    description: string;
-    imageUrl: string;
+    webpageUrl: string; // 兼容低版本的网页链接
+    miniprogramType: number; // 正式版:0，测试版:1，体验版:2
+    userName: string; // 小程序原始id
+    path: string; //小程序页面路径；对于小游戏，可以只传入 query 部分，来实现传参效果，如：传入 "?foo=bar"
+    title: string; // 小程序消息title
+    description: string; // 小程序消息desc
+    thumbImage: string; // 小程序消息封面图片，小于128k
+    hdThumbImage: string; // 小程序消息封面图片, iOS专属
   }
   export function shareMiniProgram(data: ShareMiniProgram): Promise<{ errCode?: number; errStr?: string }>;
 
