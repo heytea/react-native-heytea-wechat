@@ -182,6 +182,32 @@ RCT_EXPORT_METHOD(shareToSession:(NSDictionary *)data
     [self shareToWeixinWithData:data scene:WXSceneSession callback:callback];
 }
 
+RCT_EXPORT_METHOD(shareToMini:(NSDictionary *)data
+                  :(RCTResponseSenderBlock)callback)
+{
+    WXMiniProgramObject *miniObj = [WXMiniProgramObject object];
+    miniObj.webpageUrl = data[@"webpageUrl"];
+    miniObj.userName = data[@"userName"];
+    miniObj.path = data[@"path"];
+    miniObj.hdImageData = data[@"hdThumbImage"];
+    miniObj.withShareTicket = NO;
+    miniObj.miniProgramType = WXMiniProgramTypeRelease;
+    
+    WXMediaMessage *message = [WXMediaMessage message];
+    message.title = data[@"title"];
+    message.description = data[@"description"];
+    message.thumbData = data[@"thumbImage"];;
+    message.mediaObject = miniObj;
+    
+    SendMessageToWXReq *req = [[SendMessageToWXReq alloc]init];
+    req.bText = NO;
+    req.message = message;
+    req.scene = WXSceneSession;
+    [WXApi sendReq:req completion:^(BOOL success) {
+            
+    }];
+}
+
 RCT_EXPORT_METHOD(pay:(NSDictionary *)data
                   :(RCTResponseSenderBlock)callback)
                   
