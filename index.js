@@ -158,6 +158,7 @@ export const openWXApp = wrapApi(WeChat.openWXApp);
 const nativeShareToTimeline = wrapApi(WeChat.shareToTimeline);
 const nativeShareToSession = wrapApi(WeChat.shareToSession);
 const nativeShareToFavorite = wrapApi(WeChat.shareToFavorite);
+const nativeShareToMini = wrapApi(WeChat.shareToMini);
 // const nativeSendAuthRequest = wrapApi(WeChat.sendAuthRequest);
 
 /**
@@ -303,6 +304,19 @@ export function shareToSession(data) {
 export function shareToFavorite(data) {
   return new Promise((resolve, reject) => {
     nativeShareToFavorite(data);
+    emitter.once('SendMessageToWX.Resp', resp => {
+      if (resp.errCode === 0) {
+        resolve(resp);
+      } else {
+        reject(new WechatError(resp));
+      }
+    });
+  });
+}
+
+export function shareToMini(data) {
+  return new Promise((resolve, reject) => {
+    nativeShareToMini(data);
     emitter.once('SendMessageToWX.Resp', resp => {
       if (resp.errCode === 0) {
         resolve(resp);
