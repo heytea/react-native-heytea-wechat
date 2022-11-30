@@ -185,27 +185,40 @@ RCT_EXPORT_METHOD(shareToSession:(NSDictionary *)data
 RCT_EXPORT_METHOD(shareToMini:(NSDictionary *)data
                   :(RCTResponseSenderBlock)callback)
 {
+      dispatch_queue_t que = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_group_t group = dispatch_group_create();
+    dispatch_semaphore_t sema = dispatch_semaphore_create(0);
+    
     WXMiniProgramObject *miniObj = [WXMiniProgramObject object];
     miniObj.webpageUrl = data[@"webpageUrl"];
     miniObj.userName = data[@"userName"];
     miniObj.path = data[@"path"];
-    miniObj.hdImageData = [NSData dataWithContentsOfURL:[NSURL URLWithString: data[@"thumbImage"]]];
+    dispatch_group_async(group, que, ^{
+        miniObj.hdImageData = [NSData dataWithContentsOfURL:[NSURL URLWithString: data[@"thumbImage"]]];
+        dispatch_semaphore_signal(sema);
+    });
+   
     miniObj.withShareTicket = NO;
     miniObj.miniProgramType = 0;
     
     WXMediaMessage *message = [WXMediaMessage message];
     message.title = data[@"title"];
     message.description = data[@"description"];
-    message.thumbData = [NSData dataWithContentsOfURL:[NSURL URLWithString: data[@"thumbImage"]]];
+    message.thumbData = nil;
+   
     message.mediaObject = miniObj;
     
     SendMessageToWXReq *req = [[SendMessageToWXReq alloc]init];
     req.bText = NO;
     req.message = message;
     req.scene = WXSceneSession;
-    [WXApi sendReq:req completion:^(BOOL success) {
-      callback(@[success? [NSNull null] : @"fail"]);      
-    }];
+    
+    dispatch_group_notify(group, dispatch_get_main_queue(), ^{
+        dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
+        [WXApi sendReq:req completion:^(BOOL success) {
+            callback(@[success? [NSNull null] : @"fail"]);
+        }];
+    });
 }
 
 RCT_EXPORT_METHOD(pay:(NSDictionary *)data
