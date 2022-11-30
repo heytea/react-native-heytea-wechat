@@ -189,14 +189,14 @@ RCT_EXPORT_METHOD(shareToMini:(NSDictionary *)data
     miniObj.webpageUrl = data[@"webpageUrl"];
     miniObj.userName = data[@"userName"];
     miniObj.path = data[@"path"];
-    miniObj.hdImageData = data[@"hdThumbImage"];
+    miniObj.hdImageData = [NSData dataWithContentsOfURL:[NSURL URLWithString: data[@"thumbImage"]]];
     miniObj.withShareTicket = NO;
-    miniObj.miniProgramType = WXMiniProgramTypeRelease;
+    miniObj.miniProgramType = 0;
     
     WXMediaMessage *message = [WXMediaMessage message];
     message.title = data[@"title"];
     message.description = data[@"description"];
-    message.thumbData = data[@"thumbImage"];;
+    message.thumbData = [NSData dataWithContentsOfURL:[NSURL URLWithString: data[@"thumbImage"]]];
     message.mediaObject = miniObj;
     
     SendMessageToWXReq *req = [[SendMessageToWXReq alloc]init];
@@ -204,7 +204,7 @@ RCT_EXPORT_METHOD(shareToMini:(NSDictionary *)data
     req.message = message;
     req.scene = WXSceneSession;
     [WXApi sendReq:req completion:^(BOOL success) {
-            
+      callback(@[success? [NSNull null] : @"fail"]);      
     }];
 }
 
