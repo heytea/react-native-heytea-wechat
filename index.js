@@ -158,7 +158,6 @@ export const openWXApp = wrapApi(WeChat.openWXApp);
 const nativeShareToTimeline = wrapApi(WeChat.shareToTimeline);
 const nativeShareToSession = wrapApi(WeChat.shareToSession);
 const nativeShareToFavorite = wrapApi(WeChat.shareToFavorite);
-const nativeShareToMini = wrapApi(WeChat.shareToMini);
 // const nativeSendAuthRequest = wrapApi(WeChat.sendAuthRequest);
 
 /**
@@ -180,11 +179,11 @@ export function sendAuthRequest(scopes, state) {
 }
 
 /**
- * 
- * @param {String} data.userName 
- * @param {Number} data.miniProgramType 
- * @param {String} data.path 
- * 
+ *
+ * @param {String} data.userName
+ * @param {Number} data.miniProgramType
+ * @param {String} data.path
+ *
  */
 
 //userName, miniProgramType, path
@@ -202,9 +201,9 @@ export function launchMiniProgram(data) {
 }
 
 /**
- * 
- * @param {*} appId 
- * @param {*} url 
+ *
+ * @param {*} appId
+ * @param {*} url
  */
 export function openAuthPage(url) {
   return new Promise((resolve, reject) => {
@@ -220,8 +219,8 @@ export function openAuthPage(url) {
 }
 
 /**
- * // js 需传入授权的URL 
- * @param {*} url 
+ * // js 需传入授权的URL
+ * @param {*} url
  */
 export function openTicket(url) {
   return new Promise((resolve, reject) => {
@@ -316,14 +315,11 @@ export function shareToFavorite(data) {
 
 export function shareToMini(data) {
   return new Promise((resolve, reject) => {
-    nativeShareToMini(data);
-    emitter.once('SendMessageToWX.Resp', resp => {
-      if (resp.errCode === 0) {
-        resolve(resp);
-      } else {
-        reject(new WechatError(resp));
-      }
-    });
+    WeChat.shareToMini(data)
+    resolve({
+      errCode: 0,
+      errStr: '',
+    })
   });
 }
 
@@ -372,32 +368,6 @@ export function pay(data) {
     });
   });
 }
-
-
-
-/**
- * wechat shareMiniProgram
- * @param {String} data.webpageUrl
- * @param {String} data.miniprogramType // 正式版:0，测试版:1，体验版:2
- * @param {String} data.userName  // 微信原始id gh_afe6acb517f0
- * @param {String} data.path // 小程序目标页面
- * @param {String} data.title // 标题
- * @param {String} data.description // 描述
- * @returns {Promise}
- */
-export function shareMiniProgram(data) {
-  return new Promise((resolve, reject) => {
-    WeChat.shareMiniProgram(data);
-    emitter.once('SendMessageToWX.Resp', resp => {
-      if (resp.errCode === 0) {
-        resolve(resp);
-      } else {
-        reject(new WechatError(resp));
-      }
-    });
-  });
-}
-
 
 export function jpPay() {
   return new Promise((resolve, reject) => {
