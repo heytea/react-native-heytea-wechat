@@ -193,7 +193,7 @@ RCT_EXPORT_METHOD(shareToMini:(NSDictionary *)data
     miniObj.userName = data[@"userName"];
     miniObj.path = data[@"path"];
     dispatch_group_enter(group);
-    dispatch_group_async(group, que, ^{
+    dispatch_async(que, ^{
         miniObj.hdImageData = [NSData dataWithContentsOfURL:[NSURL URLWithString: data[@"thumbImage"]]];
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), que, ^{
             dispatch_group_leave(group);
