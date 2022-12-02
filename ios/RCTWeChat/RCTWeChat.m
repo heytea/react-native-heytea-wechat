@@ -185,17 +185,19 @@ RCT_EXPORT_METHOD(shareToSession:(NSDictionary *)data
 RCT_EXPORT_METHOD(shareToMini:(NSDictionary *)data
                   :(RCTResponseSenderBlock)callback)
 {
-      dispatch_queue_t que = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    dispatch_queue_t que = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     dispatch_group_t group = dispatch_group_create();
-    dispatch_semaphore_t sema = dispatch_semaphore_create(0);
     
     WXMiniProgramObject *miniObj = [WXMiniProgramObject object];
     miniObj.webpageUrl = data[@"webpageUrl"];
     miniObj.userName = data[@"userName"];
     miniObj.path = data[@"path"];
+    dispatch_group_enter(group);
     dispatch_group_async(group, que, ^{
         miniObj.hdImageData = [NSData dataWithContentsOfURL:[NSURL URLWithString: data[@"thumbImage"]]];
-        dispatch_semaphore_signal(sema);
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.3 * NSEC_PER_SEC)), que, ^{
+            dispatch_group_leave(group);
+        });
     });
    
     miniObj.withShareTicket = NO;
@@ -214,7 +216,6 @@ RCT_EXPORT_METHOD(shareToMini:(NSDictionary *)data
     req.scene = WXSceneSession;
     
     dispatch_group_notify(group, dispatch_get_main_queue(), ^{
-        dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
         [WXApi sendReq:req completion:^(BOOL success) {
             callback(@[success? [NSNull null] : @"fail"]);
         }];
