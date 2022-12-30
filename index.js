@@ -315,16 +315,19 @@ export function shareToFavorite(data) {
 }
 
 export function shareToMini(data) {
-  return new Promise((resolve, reject) => {
-    nativeShareToMini(data);
-    emitter.once('SendMessageToWX.Resp', resp => {
-      if (resp.errCode === 0) {
-        resolve(resp);
-      } else {
-        reject(new WechatError(resp));
-      }
+  if (Platform.OS === 'ios') {
+    return new Promise((resolve, reject) => {
+      nativeShareToMini(data);
+      emitter.once('SendMessageToWX.Resp', resp => {
+        if (resp.errCode === 0) {
+          resolve(resp);
+        } else {
+          reject(new WechatError(resp));
+        }
+      });
     });
-  });
+  }
+  return WeChat.shareToMini(data)
 }
 
 /**
