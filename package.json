@@ -1,6 +1,6 @@
 {
-  "name": "@heytea/react-native-wechat",
-  "version": "2.3.7",
+  "name": "@heytea/react-native-wechat-oversea",
+  "version": "2.3.8",
   "description": "react-native wechat function",
   "author": "Heytea <bfe@heytea.com>",
   "license": "MIT",
@@ -18,7 +18,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://git.heytea.com/react-native-plugs/react-native-wechat.git"
+    "url": "https://github.com/heytea/react-native-heytea-wechat.git"
   },
   "scripts": {
     "test": "eslint . && flow",
