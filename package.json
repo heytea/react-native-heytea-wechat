@@ -1,49 +1,47 @@
 {
-    "name": "@heytea/react-native-wechat",
-    "version": "2.3.6",
-    "description": "react-native wechat function",
-    "author": "Heytea <bfe@heytea.com>",
-    "license": "MIT",
-    "keywords": [
-      "react-native",
-      "wechat"
-    ],
-    "main": "index.js",
-    "files": [
-      "index",
-      "index.d.ts",
-      "android",
-      "ios",
-      "react-native-wechat.podspec"
-      
-    ],
-    "repository": {
-      "type": "git",
-      "url": "https://git.heytea.com/react-native-plugs/react-native-wechat.git"
-    },
-    "scripts": {
-      "test": "eslint . && flow",
-      "start": "node node_modules/react-native/local-cli/cli.js start",
-      "run-android": "node node_modules/react-native/local-cli/cli.js run-android",
-      "release-android": "node node_modules/react-native/local-cli/cli.js run-android --variant=release",
-      "log-android": "node node_modules/react-native/local-cli/cli.js log-android",
-      "reload": "adb reverse tcp:8081 tcp:8081 && adb shell input text rr",
-      "run-ios": "node node_modules/react-native/local-cli/cli.js run-ios"
-    },
-    "peerDependencies": {
-      "react-native": ">=0.55.4",
-      "events":"3.0.0"
-    },
-    "devDependencies": {
-      "react-native": "^0.55.4"
-    },
-    "presets": [
-      "react-native"
-    ],
-    "rnpm": {
-      "android": {
-        "sourceDir": "android"
-      }
+  "name": "@heytea/react-native-wechat",
+  "version": "2.3.7",
+  "description": "react-native wechat function",
+  "author": "Heytea <bfe@heytea.com>",
+  "license": "MIT",
+  "keywords": [
+    "react-native",
+    "wechat"
+  ],
+  "main": "index.js",
+  "files": [
+    "index",
+    "index.d.ts",
+    "android",
+    "ios",
+    "react-native-wechat.podspec"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://git.heytea.com/react-native-plugs/react-native-wechat.git"
+  },
+  "scripts": {
+    "test": "eslint . && flow",
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "run-android": "node node_modules/react-native/local-cli/cli.js run-android",
+    "release-android": "node node_modules/react-native/local-cli/cli.js run-android --variant=release",
+    "log-android": "node node_modules/react-native/local-cli/cli.js log-android",
+    "reload": "adb reverse tcp:8081 tcp:8081 && adb shell input text rr",
+    "run-ios": "node node_modules/react-native/local-cli/cli.js run-ios"
+  },
+  "peerDependencies": {
+    "react-native": ">=0.55.4",
+    "events": "3.0.0"
+  },
+  "devDependencies": {
+    "react-native": "^0.55.4"
+  },
+  "presets": [
+    "react-native"
+  ],
+  "rnpm": {
+    "android": {
+      "sourceDir": "android"
     }
   }
-  
+}
