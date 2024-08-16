@@ -74,7 +74,7 @@ RCT_EXPORT_METHOD(registerApp:(NSString *)appid
                   :(RCTResponseSenderBlock)callback)
 {
     self.appId = appid;
-    [WXApi registerApp:appid universalLink:@"https://ewbuq.share2dlink.com/"];
+    [WXApi registerApp:appid universalLink:@"https://m.heytea-co.com/"];
     callback(@[[NSNull null]]);
 }
 
