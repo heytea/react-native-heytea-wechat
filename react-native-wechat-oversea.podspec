@@ -13,5 +13,6 @@ Pod::Spec.new do |s|
   s.source       =  { :git => package["repository"]["url"], :tag => "#{s.version}" } 
   s.source_files = "ios/**/*.{h,m}"
   s.dependency "React"
+  s.dependency 'WechatOpenSDK', '2.0.0'
   s.requires_arc = true
 end
