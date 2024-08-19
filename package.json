@@ -1,6 +1,6 @@
 {
   "name": "@heytea/react-native-wechat",
-  "version": "2.4.2",
+  "version": "2.4.3",
   "description": "react-native wechat function",
   "author": "Heytea <bfe@heytea.com>",
   "license": "MIT",
@@ -34,7 +34,7 @@
     "events": "3.0.0"
   },
   "devDependencies": {
-    "react-native": "^0.71.19"
+    "react-native": "^0.71.0"
   },
   "presets": [
     "react-native"
