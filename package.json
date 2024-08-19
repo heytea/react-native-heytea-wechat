@@ -1,6 +1,6 @@
 {
-  "name": "@heytea/react-native-wechat-oversea",
-  "version": "2.4.1",
+  "name": "@heytea/react-native-wechat",
+  "version": "2.4.2",
   "description": "react-native wechat function",
   "author": "Heytea <bfe@heytea.com>",
   "license": "MIT",
@@ -30,11 +30,11 @@
     "run-ios": "node node_modules/react-native/local-cli/cli.js run-ios"
   },
   "peerDependencies": {
-    "react-native": ">=0.55.4",
+    "react-native": ">=0.71.0",
     "events": "3.0.0"
   },
   "devDependencies": {
-    "react-native": "^0.55.4"
+    "react-native": "^0.71.19"
   },
   "presets": [
     "react-native"
